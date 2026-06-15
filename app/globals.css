@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+:root {
+  --goguma-orange: #E8650A;
+  --goguma-brown: #8B4513;
+  --goguma-light: #FFF8F0;
+  --goguma-warm: #F5A623;
+}
+
+body {
+  background-color: #FFF8F0;
+  color: #3D2B1F;
+  font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+}
