@@ -14,8 +14,8 @@ body {
   color: #3D2B1F;
   font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
 
-  /* 화사한 파스텔 그라데이션 + 은은하게 흐르는 애니메이션 */
-  background: linear-gradient(135deg, #FFF6E9 0%, #FFE9D6 25%, #FFF0F5 50%, #FFF6E9 75%, #FFEAD9 100%);
+  /* 화사한 민트 파스텔 그라데이션 + 은은하게 흐르는 애니메이션 */
+  background: linear-gradient(135deg, #E8FBF3 0%, #D6F5EC 25%, #E6FBFA 50%, #EAFBF2 75%, #D9F7EE 100%);
   background-size: 400% 400%;
   animation: bgFlow 22s ease infinite;
   min-height: 100vh;
@@ -47,7 +47,7 @@ body {
 .deco {
   position: absolute;
   opacity: 0.35;
-  filter: drop-shadow(0 4px 6px rgba(232, 101, 10, 0.15));
+  filter: drop-shadow(0 4px 6px rgba(20, 160, 130, 0.15));
   will-change: transform;
 }
 .deco-1 { top: 12%; left: 6%;  font-size: 2.2rem; animation: floatA 9s ease-in-out infinite; }

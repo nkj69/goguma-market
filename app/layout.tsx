@@ -31,12 +31,12 @@ export default function RootLayout({
       <body className="min-h-screen">
         {/* 둥실둥실 떠다니는 배경 장식 */}
         <div className="deco-layer" aria-hidden="true">
-          <span className="deco deco-1">🍠</span>
+          <span className="deco deco-1">🍃</span>
           <span className="deco deco-2">✨</span>
-          <span className="deco deco-3">🧡</span>
-          <span className="deco deco-4">🍠</span>
+          <span className="deco deco-3">💚</span>
+          <span className="deco deco-4">🌿</span>
           <span className="deco deco-5">🌟</span>
-          <span className="deco deco-6">💛</span>
+          <span className="deco deco-6">🩵</span>
         </div>
 
         <div className="app-content">{children}</div>
