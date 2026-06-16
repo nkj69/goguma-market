@@ -40,7 +40,9 @@ export default async function HomePage() {
               <span className="text-white font-bold text-lg" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.15)' }}>고구마마켓</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-white text-sm opacity-80">{nickname}님</span>
+              <Link href={`/users/${user.id}`} className="flex items-center gap-1.5 text-white text-sm px-2.5 py-1.5 rounded-full font-medium" style={{ background: 'rgba(255,255,255,0.18)' }}>
+                <span>🙂</span><span>{nickname}님</span>
+              </Link>
               <form action={logout}>
                 <button type="submit" className="text-sm px-3 py-1.5 rounded-full font-medium" style={{ background: 'rgba(255,255,255,0.2)', color: 'white' }}>
                   로그아웃

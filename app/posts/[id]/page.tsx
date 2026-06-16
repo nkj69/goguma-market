@@ -38,13 +38,13 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
 
   const { data: post } = await supabase
     .from('posts')
-    .select('*, profiles(nickname)')
+    .select('*, profiles(nickname, avatar_url, bio)')
     .eq('id', id)
     .single()
 
   if (!post) notFound()
 
-  const seller   = post.profiles as { nickname: string } | null
+  const seller   = post.profiles as { nickname: string; avatar_url: string; bio: string } | null
   const isMyPost = user?.id === post.user_id
   const isSelling = post.status === 'selling'
   const status   = STATUS_LABEL[post.status] ?? STATUS_LABEL.selling
@@ -118,21 +118,32 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
           </div>
         )}
 
-        {/* 판매자 */}
-        <div className="bg-white rounded-2xl p-4 shadow-sm flex items-center gap-3">
-          <div className="w-11 h-11 rounded-full flex items-center justify-center font-bold text-white text-lg flex-shrink-0" style={{ background: '#E8650A' }}>
-            {(seller?.nickname ?? '?')[0]}
+        {/* 판매자 — 클릭하면 프로필로 이동 */}
+        <Link href={`/users/${post.user_id}`} className="block">
+          <div className="bg-white rounded-2xl p-4 shadow-sm active:scale-[0.98] transition-transform">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-full overflow-hidden flex items-center justify-center font-bold text-white text-lg flex-shrink-0" style={{ background: '#E8650A' }}>
+                {seller?.avatar_url
+                  ? <img src={seller.avatar_url} alt={seller.nickname} className="w-full h-full object-cover" />
+                  : (seller?.nickname ?? '?')[0]}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-bold text-sm" style={{ color: '#3D2B1F' }}>{seller?.nickname ?? '알 수 없음'}</p>
+                <p className="text-xs" style={{ color: '#A0522D' }}>판매자 · 프로필 보기 ›</p>
+              </div>
+              {isMyPost && (
+                <span className="text-xs px-2.5 py-1 rounded-full font-medium flex-shrink-0" style={{ background: '#FFF3E0', color: '#E8650A' }}>
+                  내 글
+                </span>
+              )}
+            </div>
+            {seller?.bio && (
+              <p className="text-xs leading-relaxed mt-3 p-2.5 rounded-xl line-clamp-2" style={{ color: '#7A5C3A', background: '#FFF8F0' }}>
+                {seller.bio}
+              </p>
+            )}
           </div>
-          <div>
-            <p className="font-bold text-sm" style={{ color: '#3D2B1F' }}>{seller?.nickname ?? '알 수 없음'}</p>
-            <p className="text-xs" style={{ color: '#A0522D' }}>판매자</p>
-          </div>
-          {isMyPost && (
-            <span className="ml-auto text-xs px-2.5 py-1 rounded-full font-medium" style={{ background: '#FFF3E0', color: '#E8650A' }}>
-              내 글
-            </span>
-          )}
-        </div>
+        </Link>
 
         {/* 글 내용 */}
         <div className="bg-white rounded-2xl p-5 shadow-sm">
