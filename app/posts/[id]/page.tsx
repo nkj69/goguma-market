@@ -5,6 +5,8 @@ import { logout } from '@/app/actions/auth'
 import BuyButton from '@/app/components/BuyButton'
 import DeleteButton from '@/app/components/DeleteButton'
 import ImageCarousel from '@/app/components/ImageCarousel'
+import LikeButton from '@/app/components/LikeButton'
+import CommentSection, { type CommentItem } from '@/app/components/CommentSection'
 
 const CATEGORY_EMOJI: Record<string, string> = {
   '디지털/가전': '📱', '의류/잡화': '👗', '도서/음반': '📚',
@@ -44,6 +46,42 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
   const isSelling = post.status === 'selling'
   const status   = STATUS_LABEL[post.status] ?? STATUS_LABEL.selling
   const imageUrls = (post.image_urls as string[]) || []
+
+  // 좋아요 정보
+  const { count: likeCount } = await supabase
+    .from('likes')
+    .select('*', { count: 'exact', head: true })
+    .eq('post_id', id)
+
+  let likedByMe = false
+  if (user) {
+    const { data: myLike } = await supabase
+      .from('likes')
+      .select('id')
+      .eq('post_id', id)
+      .eq('user_id', user.id)
+      .maybeSingle()
+    likedByMe = !!myLike
+  }
+
+  // 댓글 목록
+  const { data: rawComments } = await supabase
+    .from('comments')
+    .select('id, content, created_at, user_id, profiles(nickname)')
+    .eq('post_id', id)
+    .order('created_at', { ascending: true })
+
+  const comments: CommentItem[] = (rawComments ?? []).map(c => {
+    const profile = c.profiles as unknown as { nickname: string } | { nickname: string }[] | null
+    const nickname = Array.isArray(profile) ? profile[0]?.nickname : profile?.nickname
+    return {
+      id: c.id,
+      content: c.content,
+      created_at: c.created_at,
+      user_id: c.user_id,
+      nickname: nickname ?? '알 수 없음',
+    }
+  })
 
   return (
     <div className="min-h-screen" style={{ background: '#FFF8F0' }}>
@@ -113,7 +151,23 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
               <span style={{ color: '#5D3A1A' }}>{post.location}</span>
             </div>
           )}
+
+          {/* 좋아요 */}
+          <div className="mt-4 flex items-center gap-3">
+            <LikeButton
+              postId={post.id}
+              initialLiked={likedByMe}
+              initialCount={likeCount ?? 0}
+              loggedIn={!!user}
+            />
+            <span className="text-xs" style={{ color: '#A0522D' }}>
+              관심 있으면 좋아요를 눌러보세요
+            </span>
+          </div>
         </div>
+
+        {/* 댓글 */}
+        <CommentSection postId={post.id} comments={comments} currentUserId={user?.id ?? null} />
 
         {/* 내 글일 때 수정/삭제 버튼 */}
         {isMyPost && (
