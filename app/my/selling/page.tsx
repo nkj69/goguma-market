@@ -71,8 +71,10 @@ export default async function MySellingPage() {
               return (
                 <Link key={post.id} href={`/posts/${post.id}`}>
                   <div className="bg-white rounded-2xl p-4 shadow-sm flex items-start gap-3 active:scale-95 transition-transform">
-                    <div className="w-16 h-16 rounded-xl flex items-center justify-center text-2xl flex-shrink-0" style={{ background: '#FFF3E0' }}>
-                      {CATEGORY_EMOJI[post.category] || '📦'}
+                    <div className="w-16 h-16 rounded-xl flex items-center justify-center text-2xl flex-shrink-0 overflow-hidden" style={{ background: '#FFF3E0' }}>
+                      {(post.image_urls as string[] | null)?.[0]
+                        ? <img src={(post.image_urls as string[])[0]} alt={post.title} className="w-full h-full object-cover" />
+                        : (CATEGORY_EMOJI[post.category] || '📦')}
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-semibold text-sm truncate" style={{ color: '#3D2B1F' }}>{post.title}</p>

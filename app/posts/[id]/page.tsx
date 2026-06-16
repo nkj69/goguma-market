@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { logout } from '@/app/actions/auth'
 import BuyButton from '@/app/components/BuyButton'
 import DeleteButton from '@/app/components/DeleteButton'
+import ImageCarousel from '@/app/components/ImageCarousel'
 
 const CATEGORY_EMOJI: Record<string, string> = {
   '디지털/가전': '📱', '의류/잡화': '👗', '도서/음반': '📚',
@@ -38,15 +39,14 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
 
   if (!post) notFound()
 
-  const seller = post.profiles as { nickname: string } | null
+  const seller   = post.profiles as { nickname: string } | null
   const isMyPost = user?.id === post.user_id
   const isSelling = post.status === 'selling'
-  const status = STATUS_LABEL[post.status] ?? STATUS_LABEL.selling
-  const nickname = user?.user_metadata?.nickname || user?.email?.split('@')[0] || ''
+  const status   = STATUS_LABEL[post.status] ?? STATUS_LABEL.selling
+  const imageUrls = (post.image_urls as string[]) || []
 
   return (
     <div className="min-h-screen" style={{ background: '#FFF8F0' }}>
-      {/* 헤더 */}
       <header className="sticky top-0 z-10 shadow-sm" style={{ background: '#E8650A' }}>
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
           <Link
@@ -68,10 +68,14 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
       </header>
 
       <main className="max-w-lg mx-auto px-4 py-6 space-y-4 pb-28">
-        {/* 카테고리 아이콘 */}
-        <div className="w-full rounded-3xl flex items-center justify-center" style={{ background: '#FFF3E0', height: '200px' }}>
-          <span style={{ fontSize: '80px' }}>{CATEGORY_EMOJI[post.category] || '📦'}</span>
-        </div>
+        {/* 이미지 — 있으면 캐러셀, 없으면 카테고리 이모지 */}
+        {imageUrls.length > 0 ? (
+          <ImageCarousel urls={imageUrls} alt={post.title} />
+        ) : (
+          <div className="w-full rounded-3xl flex items-center justify-center" style={{ background: '#FFF3E0', height: '220px' }}>
+            <span style={{ fontSize: '80px' }}>{CATEGORY_EMOJI[post.category] || '📦'}</span>
+          </div>
+        )}
 
         {/* 판매자 */}
         <div className="bg-white rounded-2xl p-4 shadow-sm flex items-center gap-3">
@@ -111,6 +115,7 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
           )}
         </div>
 
+        {/* 내 글일 때 수정/삭제 버튼 */}
         {isMyPost && (
           <div className="flex gap-3">
             <DeleteButton postId={post.id} />
@@ -125,7 +130,7 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
         )}
       </main>
 
-      {/* 하단 가격 + 버튼 */}
+      {/* 하단 가격 + 구매 버튼 */}
       <div className="fixed bottom-0 left-0 right-0 border-t" style={{ background: 'white', borderColor: '#F5E6D3' }}>
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
           <div className="flex-1">
@@ -134,20 +139,12 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
               {post.price === 0 ? '가격 협의' : `${post.price.toLocaleString()}원`}
             </p>
           </div>
-
-          {/* 내 글 */}
           {isMyPost && (
             <Link href="/" className="px-6 py-3 rounded-xl font-bold text-sm" style={{ background: '#FFF3E0', color: '#E8650A' }}>
               목록으로
             </Link>
           )}
-
-          {/* 남의 글 — 판매중일 때만 구매 버튼 */}
-          {!isMyPost && isSelling && (
-            <BuyButton postId={post.id} />
-          )}
-
-          {/* 남의 글 — 판매 종료 */}
+          {!isMyPost && isSelling && <BuyButton postId={post.id} />}
           {!isMyPost && !isSelling && (
             <span className="px-6 py-3 rounded-xl font-bold text-sm" style={{ background: '#F0F0F0', color: '#888' }}>
               {post.status === 'sold' ? '판매완료' : '예약중'}
