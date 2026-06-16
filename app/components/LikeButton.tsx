@@ -15,6 +15,7 @@ export default function LikeButton({ postId, initialLiked, initialCount, loggedI
   const router = useRouter()
   const [liked, setLiked] = useState(initialLiked)
   const [count, setCount] = useState(initialCount)
+  const [popping, setPopping] = useState(false)
   const [, startTransition] = useTransition()
 
   async function handleClick() {
@@ -27,6 +28,10 @@ export default function LikeButton({ postId, initialLiked, initialCount, loggedI
     const nextLiked = !liked
     setLiked(nextLiked)
     setCount(c => c + (nextLiked ? 1 : -1))
+    if (nextLiked) {
+      setPopping(true)
+      setTimeout(() => setPopping(false), 450)
+    }
 
     startTransition(async () => {
       const result = await toggleLike(postId)
@@ -48,7 +53,7 @@ export default function LikeButton({ postId, initialLiked, initialCount, loggedI
         color: liked ? '#E74C3C' : '#A0522D',
       }}
     >
-      <span style={{ fontSize: '18px' }}>{liked ? '❤️' : '🤍'}</span>
+      <span className={popping ? 'heart-pop' : ''} style={{ fontSize: '18px', display: 'inline-block' }}>{liked ? '❤️' : '🤍'}</span>
       <span>{count}</span>
     </button>
   )

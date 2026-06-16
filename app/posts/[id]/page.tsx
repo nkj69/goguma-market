@@ -84,9 +84,9 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
   })
 
   return (
-    <div className="min-h-screen" style={{ background: '#FFF8F0' }}>
+    <div className="min-h-screen" style={{ background: 'transparent' }}>
       <header className="sticky top-0 z-10 shadow-sm" style={{ background: '#E8650A' }}>
-        <div className="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
+        <div className="app-container mx-auto px-4 py-3 flex items-center gap-3">
           <Link
             href="/"
             className="text-white text-xl font-bold w-8 h-8 flex items-center justify-center rounded-full flex-shrink-0"
@@ -105,7 +105,7 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
         </div>
       </header>
 
-      <main className="max-w-lg mx-auto px-4 py-6 space-y-4 pb-28">
+      <main className="app-container mx-auto px-4 py-6 space-y-4 pb-28">
         {/* 이미지 — 있으면 캐러셀, 없으면 카테고리 이모지 */}
         {imageUrls.length > 0 ? (
           <ImageCarousel urls={imageUrls} alt={post.title} />
@@ -146,7 +146,7 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
             {post.description}
           </p>
           {post.location && (
-            <div className="mt-4 p-3 rounded-xl flex items-center gap-2 text-sm" style={{ background: '#FFF8F0' }}>
+            <div className="mt-4 p-3 rounded-xl flex items-center gap-2 text-sm" style={{ background: 'transparent' }}>
               <span>📍</span>
               <span style={{ color: '#5D3A1A' }}>{post.location}</span>
             </div>
@@ -186,7 +186,7 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
 
       {/* 하단 가격 + 구매 버튼 */}
       <div className="fixed bottom-0 left-0 right-0 border-t" style={{ background: 'white', borderColor: '#F5E6D3' }}>
-        <div className="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
+        <div className="app-container mx-auto px-4 py-3 flex items-center gap-3">
           <div className="flex-1">
             <p className="text-xs" style={{ color: '#A0522D' }}>가격</p>
             <p className="font-bold text-lg" style={{ color: '#E8650A' }}>

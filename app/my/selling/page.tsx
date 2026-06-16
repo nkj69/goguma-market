@@ -38,10 +38,10 @@ export default async function MySellingPage() {
     .order('created_at', { ascending: false })
 
   return (
-    <div className="min-h-screen" style={{ background: '#FFF8F0' }}>
+    <div className="min-h-screen" style={{ background: 'transparent' }}>
       <div className="sticky top-0 z-20">
         <header className="shadow-sm" style={{ background: '#E8650A' }}>
-          <div className="max-w-lg mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="app-container mx-auto px-4 py-3 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="text-2xl">🍠</span>
               <span className="text-white font-bold text-lg">고구마마켓</span>
@@ -59,7 +59,7 @@ export default async function MySellingPage() {
         <NavTabs />
       </div>
 
-      <main className="max-w-lg mx-auto px-4 py-4 pb-28">
+      <main className="app-container mx-auto px-4 py-4 pb-28">
         <p className="text-sm font-medium mb-3" style={{ color: '#A0522D' }}>
           총 {posts?.length ?? 0}건의 판매글
         </p>
@@ -106,7 +106,7 @@ export default async function MySellingPage() {
       </main>
 
       <div className="fixed bottom-6 right-0 left-0 flex justify-center pointer-events-none">
-        <div className="max-w-lg w-full px-4 flex justify-end pointer-events-auto">
+        <div className="app-container w-full px-4 flex justify-end pointer-events-auto">
           <Link href="/posts/new" className="flex items-center gap-2 px-5 py-3.5 rounded-full shadow-lg font-bold text-white" style={{ background: '#E8650A' }}>
             <span className="text-lg">+</span>
             <span>판매글 쓰기</span>

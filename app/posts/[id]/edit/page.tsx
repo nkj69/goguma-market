@@ -125,16 +125,16 @@ export default function EditPostPage() {
 
   if (fetching) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#FFF8F0' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'transparent' }}>
         <div className="text-4xl animate-bounce">🍠</div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen" style={{ background: '#FFF8F0' }}>
+    <div className="min-h-screen" style={{ background: 'transparent' }}>
       <header className="sticky top-0 z-10 shadow-sm" style={{ background: '#E8650A' }}>
-        <div className="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
+        <div className="app-container mx-auto px-4 py-3 flex items-center gap-3">
           <button
             onClick={() => router.back()}
             className="text-white text-xl font-bold w-8 h-8 flex items-center justify-center rounded-full flex-shrink-0"
@@ -147,7 +147,7 @@ export default function EditPostPage() {
         </div>
       </header>
 
-      <main className="max-w-lg mx-auto px-4 py-6">
+      <main className="app-container mx-auto px-4 py-6">
         {error && (
           <div className="mb-4 p-3 rounded-xl text-sm font-medium" style={{ background: '#FFE4E4', color: '#C0392B' }}>
             ⚠️ {error}

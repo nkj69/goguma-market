@@ -28,10 +28,10 @@ export default async function MyPurchasesPage() {
     .order('created_at', { ascending: false })
 
   return (
-    <div className="min-h-screen" style={{ background: '#FFF8F0' }}>
+    <div className="min-h-screen" style={{ background: 'transparent' }}>
       <div className="sticky top-0 z-20">
         <header className="shadow-sm" style={{ background: '#E8650A' }}>
-          <div className="max-w-lg mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="app-container mx-auto px-4 py-3 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="text-2xl">🍠</span>
               <span className="text-white font-bold text-lg">고구마마켓</span>
@@ -49,7 +49,7 @@ export default async function MyPurchasesPage() {
         <NavTabs />
       </div>
 
-      <main className="max-w-lg mx-auto px-4 py-4 pb-10">
+      <main className="app-container mx-auto px-4 py-4 pb-10">
         <p className="text-sm font-medium mb-3" style={{ color: '#A0522D' }}>
           총 {purchases?.length ?? 0}건 구매
         </p>

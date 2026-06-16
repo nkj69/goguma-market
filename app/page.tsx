@@ -31,13 +31,13 @@ export default async function HomePage() {
     .order('created_at', { ascending: false })
 
   return (
-    <div className="min-h-screen" style={{ background: '#FFF8F0' }}>
+    <div className="min-h-screen" style={{ background: 'transparent' }}>
       <div className="sticky top-0 z-20">
-        <header className="shadow-sm" style={{ background: '#E8650A' }}>
-          <div className="max-w-lg mx-auto px-4 py-3 flex items-center justify-between">
+        <header className="shadow-sm" style={{ background: 'linear-gradient(135deg, #FF8A3D 0%, #E8650A 60%, #F5A623 100%)' }}>
+          <div className="app-container mx-auto px-4 py-3 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="text-2xl">🍠</span>
-              <span className="text-white font-bold text-lg">고구마마켓</span>
+              <span className="text-2xl bounce-y">🍠</span>
+              <span className="text-white font-bold text-lg" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.15)' }}>고구마마켓</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-white text-sm opacity-80">{nickname}님</span>
@@ -52,12 +52,15 @@ export default async function HomePage() {
         <NavTabs />
       </div>
 
-      <main className="max-w-lg mx-auto px-4 py-4 pb-28">
+      <main className="app-container mx-auto px-4 py-4 pb-28">
         {posts && posts.length > 0 ? (
           <div className="space-y-3">
-            {posts.map(post => (
+            {posts.map((post, i) => (
               <Link key={post.id} href={`/posts/${post.id}`}>
-                <div className="bg-white rounded-2xl p-4 shadow-sm flex items-start gap-3 active:scale-95 transition-transform">
+                <div
+                  className="bg-white rounded-2xl p-4 shadow-sm flex items-start gap-3 active:scale-95 transition-transform pop-in hover:shadow-md hover:-translate-y-0.5"
+                  style={{ animationDelay: `${Math.min(i * 60, 480)}ms`, border: '1.5px solid #FFE7CE' }}
+                >
                   <div className="w-16 h-16 rounded-xl flex items-center justify-center text-2xl flex-shrink-0 overflow-hidden" style={{ background: '#FFF3E0' }}>
                     {(post.image_urls as string[] | null)?.[0]
                       ? <img src={(post.image_urls as string[])[0]} alt={post.title} className="w-full h-full object-cover" />
@@ -89,7 +92,7 @@ export default async function HomePage() {
           </div>
         ) : (
           <div className="text-center py-20">
-            <div className="text-6xl mb-4">🍠</div>
+            <div className="text-6xl mb-4 bounce-y">🍠</div>
             <p className="font-bold text-lg mb-1" style={{ color: '#8B4513' }}>아직 올라온 매물이 없어요</p>
             <p className="text-sm" style={{ color: '#A0522D' }}>첫 번째 판매글을 작성해 보세요!</p>
           </div>
@@ -97,9 +100,9 @@ export default async function HomePage() {
       </main>
 
       <div className="fixed bottom-6 right-0 left-0 flex justify-center pointer-events-none">
-        <div className="max-w-lg w-full px-4 flex justify-end pointer-events-auto">
-          <Link href="/posts/new" className="flex items-center gap-2 px-5 py-3.5 rounded-full shadow-lg font-bold text-white" style={{ background: '#E8650A' }}>
-            <span className="text-lg">+</span>
+        <div className="app-container w-full px-4 flex justify-end pointer-events-auto">
+          <Link href="/posts/new" className="flex items-center gap-2 px-5 py-3.5 rounded-full shadow-lg font-bold text-white float-btn active:scale-95" style={{ background: 'linear-gradient(135deg, #FF8A3D, #E8650A)' }}>
+            <span className="text-lg bounce-y">🍠</span>
             <span>판매글 쓰기</span>
           </Link>
         </div>
