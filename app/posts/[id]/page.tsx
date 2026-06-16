@@ -8,6 +8,9 @@ import ImageCarousel from '@/app/components/ImageCarousel'
 import LikeButton from '@/app/components/LikeButton'
 import CommentSection, { type CommentItem } from '@/app/components/CommentSection'
 
+// 항상 DB에서 최신 댓글·좋아요를 새로 불러오도록 캐시 비활성화
+export const dynamic = 'force-dynamic'
+
 const CATEGORY_EMOJI: Record<string, string> = {
   '디지털/가전': '📱', '의류/잡화': '👗', '도서/음반': '📚',
   '스포츠/레저': '⚽', '가구/인테리어': '🛋️', '생활/주방': '🍳',

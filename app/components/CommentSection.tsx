@@ -41,7 +41,10 @@ export default function CommentSection({ postId, comments, currentUserId }: Prop
     startTransition(async () => {
       const result = await addComment(postId, formData)
       if (result?.error) setError(result.error)
-      else formRef.current?.reset()
+      else {
+        formRef.current?.reset()
+        router.refresh()
+      }
     })
   }
 
@@ -50,6 +53,7 @@ export default function CommentSection({ postId, comments, currentUserId }: Prop
     startTransition(async () => {
       const result = await deleteComment(commentId, postId)
       if (result?.error) alert(result.error)
+      else router.refresh()
     })
   }
 
