@@ -13,20 +13,20 @@ export default function NavTabs() {
   const pathname = usePathname()
 
   return (
-    <nav className="flex bg-white border-b" style={{ borderColor: '#F5E6D3' }}>
+    <nav className="flex justify-center gap-6 bg-white border-b" style={{ borderColor: '#F5E6D3' }}>
       {TABS.map(tab => {
         const active = pathname === tab.href
         return (
           <Link
             key={tab.href}
             href={tab.href}
-            className="flex-1 py-2.5 flex flex-col items-center gap-0.5 text-xs font-medium transition-colors"
+            className="py-2.5 px-2 flex flex-col items-center gap-0.5 text-lg font-medium transition-colors"
             style={{
               color: active ? '#E8650A' : '#A0522D',
               borderBottom: active ? '2px solid #E8650A' : '2px solid transparent',
             }}
           >
-            <span className="text-base">{tab.icon}</span>
+            <span className="text-2xl">{tab.icon}</span>
             <span>{tab.label}</span>
           </Link>
         )
